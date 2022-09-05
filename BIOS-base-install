@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
 ##  This is the simplest possible Arch Linux install script I think...
-HOSTNAME="X230-Arch-B"
+HOSTNAME="X230-Arch-A"
 #VIDEO_DRIVER="xf86-video-vmware"
-IN_DEVICE=/dev/sdb
+IN_DEVICE=/dev/sda
 # BOOT_DEVICE="${IN_DEVICE}1" # uncoment for boot (and change partition numbers)
 ROOT_DEVICE="${IN_DEVICE}1"
 SWAP_DEVICE="${IN_DEVICE}2"
@@ -200,23 +200,23 @@ arch-chroot /mnt systemctl enable NetworkManager.service
 ## INSTALL GRUB ##
 ##################
 ## Uncomment here if not required (second drive)
-# clear
-# echo "Installing grub..." && sleep 4
-# arch-chroot /mnt pacman -S --noconfirm grub os-prober
+ clear
+ echo "Installing grub..." && sleep 4
+ arch-chroot /mnt pacman -S --noconfirm grub os-prober
 
 ## We're not checking for EFI; We're assuming MBR
-# arch-chroot /mnt grub-install "$IN_DEVICE"
-#
-# echo "configuring /boot/grub/grub.cfg..."
-# arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
-# [[ "$?" -eq 0 ]] && echo "mbr bootloader installed..."
+ arch-chroot /mnt grub-install "$IN_DEVICE"
+
+ echo "configuring /boot/grub/grub.cfg..."
+ arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+ [[ "$?" -eq 0 ]] && echo "mbr bootloader installed..."
 
 ##################
 
 
 ##  To fix intel ME error
-# arch-chroot /mnt echo "blacklist mei
-# blacklist mei_me" > /mnt/etc/modprobe.d/mei.conf
+ arch-chroot /mnt echo "blacklist mei
+ blacklist mei_me" > /mnt/etc/modprobe.d/mei.conf
 
 ## to fix bluetooth firmware issue
 # arch-chroot /mnt git clone https://aur.archlinux.org/bcm20702a1-firmware
